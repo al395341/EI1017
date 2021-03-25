@@ -1,8 +1,14 @@
 package controladores;
 
-public class ControladorPersonas {
-    public ControladorPersonas() {
+import clases.Persona;
+import modelos.ModeloPersonas;
 
+import java.util.ArrayList;
+
+public class ControladorPersonas {
+    private ModeloPersonas modeloPersonas;
+    public ControladorPersonas() {
+        modeloPersonas = new ModeloPersonas();
     }
     /*
     *
@@ -10,26 +16,38 @@ public class ControladorPersonas {
     * Devuelve true en el caso de ser validos dichos datos y false en el caso contrario
     *
     * */
-    public  boolean añadirPersona(String nombre, String correo) {
-        return false;
+    public  String añadirPersona(String nombre, String correo) {
+        if(nombre == " " || correo == " ") {
+            return "Los campos no pueden estar vacios";
+        }
+        Persona p = new Persona(nombre,correo);
+        if(modeloPersonas.añadirPersona(p)) {
+            return "Persona añadida correctamente";
+        } else {
+            return "La persona no se ha añadido debido a un error";
+        }
     }
     /*
-     *
      * Metodo que recibe una persona conprueba si existe dicha persona
      * Devuelve true en el caso de ser validos dichos datos y false en el caso contrario
      *
      * */
-    public boolean darBajaPersona(String persona){
-        return false;
+    public String darBajaPersona(String persona){
+        if(persona == " ") {
+            return "Los campos son obligatorios";
+        }
+        if(modeloPersonas.eliminarPersona(persona)) {
+            return "Persona eliminada con exito";
+        }
+        return "La persona no existe";
     }
+
     /*
-     *
-     * Metodo que recibe una persona y una tarea conprueba si existe dicha persona
-     * Devuelve true en el caso de ser validos dichos datos y false en el caso contrario
-     *
-     * */
-    public boolean hacerResponsable(String persona, String tarea) {
-        return false;
+    * Metodo que devuelve la lista de personas.
+    *
+    * */
+    public ArrayList<Persona> listarPersonas() {
+        return modeloPersonas.getListaPersonas();
     }
 
 }

@@ -1,5 +1,7 @@
 package clases;
 
-public class Proyecto {
+public class Etiqueta {
+
     private String nombre;
+
 }
