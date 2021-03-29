@@ -26,4 +26,10 @@ public class ControladorEtiqueta {
         return modeloEtiquetas.listarEtiquetas();
     }
 
+    public boolean existeEtiqueta(String etiqueta) {
+        ArrayList<Etiqueta> listaEtiquetas = modeloEtiquetas.listarEtiquetas();
+        Etiqueta e = new Etiqueta(etiqueta);
+        return listaEtiquetas.contains(e);
+    }
+
 }

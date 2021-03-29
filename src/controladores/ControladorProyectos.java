@@ -1,8 +1,11 @@
 package controladores;
 
+import clases.Etiqueta;
 import clases.Persona;
 import clases.Proyecto;
+import clases.Tarea;
 import modelos.ModeloProyectos;
+import tests.T;
 
 import java.util.ArrayList;
 
@@ -34,19 +37,19 @@ public class ControladorProyectos {
         return true;
     }
 
-    public boolean añadirPersonaProyecto(String nombre, String persona, String correo) {
+    public String añadirPersonaProyecto(String nombre, String persona, String correo) {
         if(persona.equals(" ") || persona.equals(" ")) {
-            return false;
+            return "Los campos son obligatorios";
         }
         Persona persona1 = new Persona(persona,correo);
         ArrayList<Persona> listaPersonas = controladorPersonas.listarPersonas();
         for (Persona person: listaPersonas) {
             if(person.getNombre().equals(persona) && person.getCorreo().equals(correo))
                 if(modeloProyectos.añadirPersonasProyecto(nombre,persona1)) {
-                    return true;
+                    return "Persona añadida al proyecto";
                 }
         }
-        return false;
+        return "Algo no ha funcionado bien";
     }
 
     public ArrayList<Persona> listarPersonasProyecto(String nombre) {
@@ -58,12 +61,22 @@ public class ControladorProyectos {
         return listaPersonas;
     }
 
-    public boolean añadirTareasProyecto(Proyecto p) {
-        return false;
+    public String añadirTarea(String proyecto, String nombre, String desc, ArrayList<Persona> listaPersonas, Persona responsable, String fechaInicio, int prioridad,String resultado ,ArrayList<Etiqueta> listaEtiquetas) {
+        if(nombre.equals(" ") || desc.equals(" ") || fechaInicio.equals(" "))
+            return "Los campos nombre, descripcion y fecha inicial son obligados";
+        if(listaPersonas.size() == 0 || listaEtiquetas.size() == 0)
+            return "Es necesario teneer personas al proyecto y etiquetas";
+        if (responsable == null)
+            return "Es necesaria una persona responsable";
+        Tarea tarea = new Tarea(nombre,desc,listaPersonas,responsable,prioridad,fechaInicio,resultado,listaEtiquetas);
+        if(modeloProyectos.añadirTareasProyecto(proyecto,tarea))
+            return "Tarea añadida al proyecto";
+        return "Algo ha ido mal";
     }
 
-    public String[] listarTareasProyecto(Proyecto p) {
-        return null;
+
+    public ArrayList<Tarea> listarTareasProyecto(String p) {
+        return modeloProyectos.listarTareasProyecto(p);
     }
 
 

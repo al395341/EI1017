@@ -7,7 +7,7 @@ public class Tarea {
     private String nombre;
     private String descripcion;
     private ArrayList<Persona> listaParticipantes;
-    private String responsable;
+    private Persona responsable;
     private int prioridad;
     private String fechaCreacion;
     private String fechaFinalizacion;
@@ -15,15 +15,15 @@ public class Tarea {
     private String resultado;
     private ArrayList<Etiqueta> etiquetas;
 
-    public Tarea(String nombre, String descripcion, ArrayList<Persona> listaParticipantes, String responsable, int prioridad, String fechaCreacion, String fechaFinalizacion, boolean estadoTarea, String resultado, ArrayList<Etiqueta> etiquetas) {
+    public Tarea(String nombre, String descripcion, ArrayList<Persona> listaParticipantes, Persona responsable, int prioridad, String fechaCreacion, String resultado, ArrayList<Etiqueta> etiquetas) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.listaParticipantes = listaParticipantes;
         this.responsable = responsable;
         this.prioridad = prioridad;
         this.fechaCreacion = fechaCreacion;
-        this.fechaFinalizacion = fechaFinalizacion;
-        this.estadoTarea = estadoTarea;
+        this.fechaFinalizacion = "";
+        this.estadoTarea = false;
         this.resultado = resultado;
         this.etiquetas = etiquetas;
     }
@@ -52,11 +52,11 @@ public class Tarea {
         this.listaParticipantes = listaParticipantes;
     }
 
-    public String getResponsable() {
+    public Persona getResponsable() {
         return responsable;
     }
 
-    public void setResponsable(String responsable) {
+    public void setResponsable(Persona responsable) {
         this.responsable = responsable;
     }
 

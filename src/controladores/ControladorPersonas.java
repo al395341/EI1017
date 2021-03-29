@@ -50,4 +50,15 @@ public class ControladorPersonas {
         return modeloPersonas.getListaPersonas();
     }
 
+    public boolean existePersona(String nombre, String correo) {
+        if(nombre.equals(" ") || correo.equals(" "))
+            return false;
+        ArrayList<Persona> listaPersonas = listarPersonas();
+        for (Persona p : listaPersonas) {
+            if(p.getNombre().equals(nombre) && p.getCorreo().equals(correo))
+                return true;
+        }
+        return true;
+    }
+
 }

@@ -24,7 +24,6 @@ public class ModeloPersonas {
         for(Persona p: listaPersonas) {
             if(p.getNombre().equals(nombre)) {
                 aux = p;
-                System.out.println("ENCONTRADOR!!!!");
                 eliminado = true;
             }
         }
