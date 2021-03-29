@@ -1,5 +1,7 @@
 package clases;
 
+// Logan Ilan Kalfa
+
 public class Documentacion extends Resultado {
 
     private String formatoDocumento;

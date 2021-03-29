@@ -1,5 +1,7 @@
 package modelos;
 
+// Logan Ilan Kalfa
+
 import clases.Persona;
 
 import java.util.ArrayList;

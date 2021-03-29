@@ -1,5 +1,7 @@
 package controladores;
 
+// Logan Ilan Kalfa
+
 import clases.Persona;
 import modelos.ModeloPersonas;
 

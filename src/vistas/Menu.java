@@ -1,9 +1,10 @@
 package vistas;
 
+// Logan Ilan Kalfa
+
 import clases.Etiqueta;
 import clases.Persona;
 import clases.Proyecto;
-import clases.Tarea;
 import controladores.ControladorEtiqueta;
 import controladores.ControladorPersonas;
 import controladores.ControladorProyectos;
@@ -12,9 +13,7 @@ import enumeraciones.MenuPersonas;
 import enumeraciones.MenuPrincipal;
 import enumeraciones.MenuProyectos;
 import enumeraciones.MenuTareas;
-import excepciones.OpcionMenuIncorrectaException;
 import excepciones.ProyectoNoSeleccionadoException;
-import tests.T;
 
 import java.util.ArrayList;
 import java.util.Scanner;

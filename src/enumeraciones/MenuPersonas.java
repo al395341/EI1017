@@ -1,5 +1,7 @@
 package enumeraciones;
 
+// Logan Ilan Kalfa
+
 public enum MenuPersonas {
     // GESTION DE LOS TRABAJADORES DE LOS PROYECTOS Y TAREAS
     DAR_ALTA_PERSONA("Dar de alta a una persona."),

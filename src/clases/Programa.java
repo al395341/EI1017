@@ -1,5 +1,7 @@
 package clases;
 
+// Logan Ilan Kalfa
+
 public class Programa extends Resultado{
 
     private String lenguaje;

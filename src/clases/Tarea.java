@@ -1,5 +1,7 @@
 package clases;
 
+// Logan Ilan Kalfa
+
 import java.util.ArrayList;
 
 public class Tarea {

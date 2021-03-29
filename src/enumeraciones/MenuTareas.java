@@ -1,5 +1,7 @@
 package enumeraciones;
 
+// Logan Ilan Kalfa
+
 public enum MenuTareas {
     // FINALIZAMOS UNA TAREA
     FINALIZAR_TAREA("Marcar una tarea como finalizada."),

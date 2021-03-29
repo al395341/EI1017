@@ -1,11 +1,12 @@
 package controladores;
 
+// Logan Ilan Kalfa
+
 import clases.Etiqueta;
 import clases.Persona;
 import clases.Proyecto;
 import clases.Tarea;
 import modelos.ModeloProyectos;
-import tests.T;
 
 import java.util.ArrayList;
 

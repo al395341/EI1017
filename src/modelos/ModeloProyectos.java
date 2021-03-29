@@ -1,12 +1,12 @@
 package modelos;
 
+// Logan Ilan Kalfa
+
 import clases.Etiqueta;
 import clases.Persona;
 import clases.Proyecto;
 import clases.Tarea;
-import tests.T;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 

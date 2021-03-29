@@ -1,5 +1,7 @@
 package clases;
 
+// Logan Ilan Kalfa
+
 public class Proyecto {
     private String nombre;
     private boolean finalizado;

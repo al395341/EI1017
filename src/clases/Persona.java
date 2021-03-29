@@ -4,6 +4,8 @@ import tests.T;
 
 import java.util.ArrayList;
 
+// Logan Ilan Kalfa
+
 public class Persona {
 
     private String nombre;

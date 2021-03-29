@@ -1,5 +1,7 @@
 package enumeraciones;
 
+// Logan Ilan Kalfa
+
 public enum MenuPrincipal {
     // SELECCIONAR EL PROYECTO QUE VAMOS A GESTIONAR
     SELECCIONAR_PROYECTO("Selecciona un proyecto"),

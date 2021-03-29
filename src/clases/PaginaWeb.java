@@ -1,5 +1,7 @@
 package clases;
 
+// Logan Ilan Kalfa
+
 public class PaginaWeb extends Resultado{
 
     private boolean dinamica;
