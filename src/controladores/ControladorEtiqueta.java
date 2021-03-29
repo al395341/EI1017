@@ -1,5 +1,29 @@
 package controladores;
 
+
+import clases.Etiqueta;
+import modelos.ModeloEtiquetas;
+
+import java.util.ArrayList;
+
 public class ControladorEtiqueta {
+
+    private ModeloEtiquetas modeloEtiquetas;
+
+    public ControladorEtiqueta() {
+        modeloEtiquetas = new ModeloEtiquetas();
+    }
+
+    public String añadirEtiqueta(String nombre) {
+        if(nombre.equals(" "))
+            return "La etiqueta necesita un nombre";
+        Etiqueta etiqueta = new Etiqueta(nombre);
+        modeloEtiquetas.añadirEtiqueta(etiqueta);
+        return "Etiqueta insertada";
+    }
+
+    public ArrayList<Etiqueta> devolverEtiquetas() {
+        return modeloEtiquetas.listarEtiquetas();
+    }
 
 }

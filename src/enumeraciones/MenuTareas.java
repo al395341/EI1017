@@ -10,7 +10,6 @@ public enum MenuTareas {
     // CREAMOS LAS ETIQUETAS PARA RESTRINGIR EL USO DE SINONIMOS ENTRE TAREAS E IR TODOS AL UNISONO
     DAR_ALTA_ETIQUETA("Crea un etiqueta para las tareas."),
     LISTAR_ETIQUETA("Listar etiquetas."),
-    ELIMINAR_ETIQUETA("Elimina una etiqueta."),
     // AÑADIMOS DE LAS ETIQUETAS CREADAS LA QUE SELECCIONEMOS A LA TAREA
     ANYADIR_ETIQUETA_TAREA("Añadir una etiqueta a una tarea"),
     ELIMINAR_ETIQUETA_TAREA("Eliminar una etiqueta a una tarea"),

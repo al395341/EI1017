@@ -12,9 +12,8 @@ public class ModeloPersonas {
     }
 
     public boolean añadirPersona(Persona p) {
-        if(listaPersonas.contains(p)) {
+        if(listaPersonas.contains(p))
             return false;
-        }
         listaPersonas.add(p);
         return true;
     }

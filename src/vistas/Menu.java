@@ -1,6 +1,8 @@
 package vistas;
 
+import clases.Etiqueta;
 import clases.Persona;
+import clases.Proyecto;
 import controladores.ControladorEtiqueta;
 import controladores.ControladorPersonas;
 import controladores.ControladorProyectos;
@@ -18,27 +20,45 @@ public class Menu {
     private ControladorProyectos controladorProyectos;
     private ControladorTareas controladorTareas;
     private ControladorEtiqueta contraladorEtiqueta;
+    private Proyecto proyectoSeleccionado;
 
     public Menu(){
         controladorPersonas = new ControladorPersonas();
-        controladorProyectos = new ControladorProyectos();
+        controladorProyectos = new ControladorProyectos(controladorPersonas);
         controladorTareas = new ControladorTareas();
         contraladorEtiqueta = new ControladorEtiqueta();
+        proyectoSeleccionado = null;
     }
     public void cargarMenú(){
+
         int opcion;
         Scanner sc = new Scanner(System.in);
         do{
+            if(proyectoSeleccionado != null)
+                System.err.println("Proyecto actual "+proyectoSeleccionado.getNombre());
             System.out.println(MenuPrincipal.getMenu());
             System.out.println("Elige una opción");
             opcion = sc.nextByte();
             MenuPrincipal menuPrincipal = MenuPrincipal.getOpcion(opcion);
             switch (menuPrincipal) {
                 case SELECCIONAR_PROYECTO:
-                    System.out.println("Seleccionar un proyecto");
+                    System.out.println("Introduce el nombre del proyecto a seleccionar");
+                    String nombre = sc.next();
+                    if (controladorProyectos.seleccionarProyecto(nombre))
+                        proyectoSeleccionado = new Proyecto(nombre);
+                    else
+                        System.out.println("El proyecto no existe");
                     break;
                 case LISTAR_PROYECTO:
-                    System.out.println("Listado de proyectos sin finalizar");
+                    ArrayList<String> listaProyecto = controladorProyectos.devolverProyectos();
+                    if(listaProyecto.size() == 0)
+                        System.out.println("Sin proyectos");
+                    else {
+                        System.out.println("Listado de proyectos");
+                        for (String p : listaProyecto) {
+                            System.out.println(p);
+                        }
+                    }
                     break;
                 case GESTION_PROYECTOS:
                     System.out.println(MenuProyectos.getMenu());
@@ -47,10 +67,24 @@ public class Menu {
                     MenuProyectos menuProyectos = MenuProyectos.getOpcion(opcion);
                     switch (menuProyectos) {
                         case CREAR_PROYECTO:
-                            System.out.println("Crear un proyecto");
+                            System.out.println("Introduce el nombre del proyecto a iniciar");
+                            controladorProyectos.iniciarProyecto(sc.next());
                             break;
                         case DAR_ALTA_PERSONAS_PROYECTO:
-                            System.out.println("Dar de alta personas");
+                            if(proyectoSeleccionado != null) {
+                                System.out.println("Introduce el nombre de las personas a dar de alta 0 para terminar");
+                                System.out.println("Introduce el nombre");
+                                String nombrePersona = sc.next();
+                                while (!nombrePersona.equals("0")) {
+                                    System.out.println("Introduce el correo");
+                                    String correoPersona = sc.next();
+                                    controladorProyectos.añadirPersonaProyecto(proyectoSeleccionado.getNombre(), nombrePersona, correoPersona);
+                                    System.out.println("Introduce el nombre 0 para terminar");
+                                    nombrePersona = sc.next();
+                                }
+                                System.out.println("Personas introducidas");
+                            } else
+                                System.err.println("Seleccione un proyecto primero");
                             break;
                         case DAR_ALTA_TAREAS_PROYECTO:
                             System.out.println("Dar de alta tareas");
@@ -59,7 +93,19 @@ public class Menu {
                             System.out.println("Listado de tareas");
                             break;
                         case LISTAR_PERSONAS_PROYECTO:
-                            System.out.println("Listado de personas");
+                            if (proyectoSeleccionado != null) {
+                                System.out.println("Listado de personas");
+                                ArrayList<Persona> listaPersonas = controladorProyectos.listarPersonasProyecto(proyectoSeleccionado.getNombre());
+                                if (listaPersonas == null) {
+                                    System.out.println("No hay personas asignadas al proyecto");
+                                }
+                                else {
+                                    for (Persona p : listaPersonas) {
+                                        System.out.println("Nombre: " + p.getNombre() + " Correo: " + p.getCorreo());
+                                    }
+                                }
+                            } else
+                                System.err.println("Seleccione un proyecto primero");
                             break;
                         case SALIR:
                             break;
@@ -84,13 +130,19 @@ public class Menu {
                             System.out.println("Responsabilizar a una persona en una tarea");
                             break;
                         case LISTAR_ETIQUETA:
-                            System.out.println("Listar etiquetas creadas");
+                            ArrayList<Etiqueta> listaEtiquetas = contraladorEtiqueta.devolverEtiquetas();
+                            if(listaEtiquetas.size() == 0)
+                                System.out.println("Sin etiquetas");
+                            else {
+                                for (Etiqueta etiqueta : listaEtiquetas) {
+                                    System.out.println(etiqueta.getNombre());
+                                }
+                            }
                             break;
                         case DAR_ALTA_ETIQUETA:
-                            System.out.println("Crear etiquetas");
-                            break;
-                        case ELIMINAR_ETIQUETA:
-                            System.out.println("Eliminar etiquetas");
+                            System.out.println("Introduce la etiqueta");
+                            nombre = sc.next();
+                            System.out.println(contraladorEtiqueta.añadirEtiqueta(nombre));
                             break;
                         case ANYADIR_ETIQUETA_TAREA:
                             System.out.println("Añadir etiqueta a una tarea");
@@ -110,7 +162,11 @@ public class Menu {
                     switch (menuPersonas) {
                         case DAR_ALTA_PERSONA:
                             System.out.println("Crear una persona");
-                            System.out.println(controladorPersonas.añadirPersona("Albert","al341911@uji.es"));
+                            System.out.println("Introduzca el nombre de la persona");
+                            String nombrePersona = sc.next();
+                            System.out.println("Introduzca el correo de "+nombrePersona);
+                            String correoPersona = sc.next();
+                            System.out.println(controladorPersonas.añadirPersona(nombrePersona,correoPersona));
                             break;
                         case LISTAR_PERSONAS:
                             ArrayList<Persona> listaPersonas;
@@ -125,7 +181,9 @@ public class Menu {
                             break;
                         case ELIMINAR_PERSONA:
                             System.out.println("Eliminar una persona");
-                            System.out.println(controladorPersonas.darBajaPersona("Albert"));
+                            System.out.println("Introduce el nombre de la persona a eliminar");
+                            nombrePersona = sc.next();
+                            System.out.println(controladorPersonas.darBajaPersona(nombrePersona));
                             break;
                         case SALIR:
                             break;

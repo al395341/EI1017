@@ -17,7 +17,7 @@ public class ControladorPersonas {
     *
     * */
     public  String añadirPersona(String nombre, String correo) {
-        if(nombre == " " || correo == " ") {
+        if(nombre.equals(" ") || correo.equals(" ")) {
             return "Los campos no pueden estar vacios";
         }
         Persona p = new Persona(nombre,correo);
@@ -33,7 +33,7 @@ public class ControladorPersonas {
      *
      * */
     public String darBajaPersona(String persona){
-        if(persona == " ") {
+        if(persona.equals(" ")) {
             return "Los campos son obligatorios";
         }
         if(modeloPersonas.eliminarPersona(persona)) {

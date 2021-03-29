@@ -9,15 +9,19 @@ public enum MenuPersonas {
 
 
     private String descripcion;
+
     MenuPersonas(String descripcion) {
         this.descripcion = descripcion;
     }
+
     public String getDescripcion() {
         return descripcion;
     }
+
     public static MenuPersonas getOpcion(int posicion) {
         return values()[posicion];
     }
+
     public static String getMenu() {
         StringBuilder sb = new StringBuilder();
         for (MenuPersonas opcion : MenuPersonas.values()) {
