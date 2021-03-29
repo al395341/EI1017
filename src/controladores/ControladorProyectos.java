@@ -13,10 +13,12 @@ public class ControladorProyectos {
 
     private ModeloProyectos modeloProyectos;
     private ControladorPersonas controladorPersonas;
+    private ControladorTareas controladorTareas;
 
-    public ControladorProyectos(ControladorPersonas controladorPersonas) {
+    public ControladorProyectos(ControladorPersonas controladorPersonas, ControladorTareas controladorTareas) {
         modeloProyectos = new ModeloProyectos();
         this.controladorPersonas = controladorPersonas;
+        this.controladorTareas = controladorTareas;
     }
 
     public String iniciarProyecto(String nombre) {
@@ -69,8 +71,9 @@ public class ControladorProyectos {
         if (responsable == null)
             return "Es necesaria una persona responsable";
         Tarea tarea = new Tarea(nombre,desc,listaPersonas,responsable,prioridad,fechaInicio,resultado,listaEtiquetas);
-        if(modeloProyectos.añadirTareasProyecto(proyecto,tarea))
+        if(modeloProyectos.añadirTareasProyecto(proyecto,tarea)) {
             return "Tarea añadida al proyecto";
+        }
         return "Algo ha ido mal";
     }
 
@@ -79,5 +82,51 @@ public class ControladorProyectos {
         return modeloProyectos.listarTareasProyecto(p);
     }
 
+    public String hacerResponsable(String proyecto, String tarea, Persona persona) {
+        if(tarea.equals(" ") || persona == null)
+            return "Los campos son necesarios";
+        if(modeloProyectos.hacerResponsable(proyecto,tarea,persona))
+            return "Persona responsable actualizada con exito";
+        return "Algo ha salido mal";
+    }
 
+    public String finalizarTarea(String proyecto, String tarea) {
+        if(tarea.equals(" "))
+            return "Los campos son obligatorios";
+        if(modeloProyectos.finalizarTarea(proyecto,tarea))
+            return "Tarea finalizada con exito";
+        return "Algo ha salido mal";
+    }
+
+    public String añadirPersonaTarea(String proyecto, String tarea, Persona persona) {
+        if(tarea.equals(" ") || persona == null)
+            return "Los campos son obligatorios";
+        if(modeloProyectos.añadirPersonaTarea(proyecto,tarea,persona))
+            return "Persona añadida con exito a la tarea";
+        return "Algo ha salido mal";
+    }
+
+    public String eliminarPersonaTarea(String proyecto, String tarea, Persona persona) {
+        if(tarea.equals(" ") || persona == null)
+            return "Los campos son obligatorios";
+        if(modeloProyectos.eliminarPersonaTarea(proyecto,tarea,persona))
+            return "Persona eliminada con exito de la tarea";
+        return "Algo ha salido mal";
+    }
+
+    public String añadirEtiquetaTarea(String proyecto, String tarea, Etiqueta etiqueta) {
+        if(tarea.equals(" ") || etiqueta == null)
+            return "Los campos son obligatorios";
+        if(modeloProyectos.añadirEtiquetaTarea(proyecto,tarea,etiqueta))
+            return "Etiqueta añadida con exito a la tarea";
+        return "Algo ha salido mal";
+    }
+
+    public String eliminarEtiquetaTarea(String proyecto, String tarea, Etiqueta etiqueta) {
+        if(tarea.equals(" ") || etiqueta == null)
+            return "Los campos son obligatorios";
+        if(modeloProyectos.eliminarEtiquetaTarea(proyecto,tarea,etiqueta))
+            return "Etiqueta añadida con exito a la tarea";
+        return "Algo ha salido mal";
+    }
 }

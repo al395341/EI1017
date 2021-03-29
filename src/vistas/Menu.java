@@ -28,9 +28,10 @@ public class Menu {
 
     public Menu(){
         controladorPersonas = new ControladorPersonas();
-        controladorProyectos = new ControladorProyectos(controladorPersonas);
+
         controladorTareas = new ControladorTareas();
         controladorEtiqueta = new ControladorEtiqueta();
+        controladorProyectos = new ControladorProyectos(controladorPersonas,controladorTareas);
         proyectoSeleccionado = null;
     }
     public void cargarMenú() {
@@ -109,28 +110,30 @@ public class Menu {
                                     System.out.println("Introduce el nombre");
                                     nombre = sc.next();
                                     System.out.println("Introduce la descripción");
-                                    String desc = sc.nextLine();
+                                    String desc = sc.next();
                                     ArrayList<Persona> listaPersonas = new ArrayList<Persona>();
                                     System.out.println("Introduce el nombre de la persona 0 para terminar");
                                     String nombrePersona = sc.next();
                                     System.out.println("Introduce el correo de la persona 0 para terminar");
                                     String correoPersona = sc.next();
                                     Persona persona = null;
-                                    while (controladorPersonas.existePersona(nombrePersona, correoPersona)) {
-                                        persona = new Persona(nombrePersona, correoPersona);
-                                        listaPersonas.add(persona);
-                                        System.out.println("Introduce el nombre de la persona 0 para terminar");
-                                        nombrePersona = sc.next();
-                                        System.out.println("Introduce el correo de la persona 0 para terminar");
-                                        correoPersona = sc.next();
-                                    }
+                                    persona = new Persona(nombrePersona, correoPersona);
+                                    listaPersonas.add(persona);
+//                                    while (!controladorPersonas.existePersona(nombrePersona, correoPersona)) {
+//                                        persona = new Persona(nombrePersona, correoPersona);
+//                                        listaPersonas.add(persona);
+//                                        System.out.println("Introduce el nombre de la persona 0 para terminar");
+//                                        nombrePersona = sc.next();
+//                                        System.out.println("Introduce el correo de la persona 0 para terminar");
+//                                        correoPersona = sc.next();
+//                                    }
                                     System.out.println("Selecciona un responsable de la lista anterior");
                                     System.out.println("Introduce el nombre de la persona responsable");
                                     String nombrePersonaResp = sc.next();
                                     System.out.println("Introduce el correo de la persona responsable");
                                     String correoPersonaResp = sc.next();
                                     persona = new Persona(nombrePersonaResp, correoPersonaResp);
-                                    if (listaPersonas.contains(persona)) {
+                                    //if (listaPersonas.contains(persona)) {
                                         System.out.println("Introduce la prioridad");
                                         int prioridad = sc.nextInt();
                                         System.out.println("Introduce la fecha de inicio");
@@ -140,14 +143,16 @@ public class Menu {
                                         ArrayList<Etiqueta> listaEtiquetas = new ArrayList<Etiqueta>();
                                         System.out.println("Introduce las etiquetas 0 para terminar");
                                         String etiqueta = sc.next();
-                                        while (controladorEtiqueta.existeEtiqueta(etiqueta)) {
-                                            Etiqueta eti = new Etiqueta(etiqueta);
-                                            listaEtiquetas.add(eti);
-                                            System.out.println("Introduce las etiquetas 0 para terminar");
-                                            etiqueta = sc.next();
-                                        }
+                                        Etiqueta eti = new Etiqueta(etiqueta);
+                                        listaEtiquetas.add(eti);
+//                                        while (!controladorEtiqueta.existeEtiqueta(etiqueta)) {
+//                                            Etiqueta eti = new Etiqueta(etiqueta);
+//                                            listaEtiquetas.add(eti);
+//                                            System.out.println("Introduce las etiquetas 0 para terminar");
+//                                            etiqueta = sc.next();
+//                                        }
                                         controladorProyectos.añadirTarea(proyectoSeleccionado.getNombre(), nombre, desc, listaPersonas, persona, fechaInicio, prioridad, resultado, listaEtiquetas);
-                                    }
+                                    //}
                                 } else
                                     throw new ProyectoNoSeleccionadoException();
                                 break;
@@ -168,16 +173,39 @@ public class Menu {
                         MenuTareas menuTareas = MenuTareas.getOpcion(opcion);
                         switch (menuTareas) {
                             case FINALIZAR_TAREA:
-                                System.out.println("Finalizar una tarea");
+                                System.out.println("Introduce el nombre de la tarea");
+                                String tarea = sc.next();
+                                System.out.println(controladorProyectos.finalizarTarea(proyectoSeleccionado.getNombre(),tarea));
                                 break;
                             case INTRODUCIR_PERSONA_TAREA:
-                                System.out.println("Introducir persona en una tarea");
+                                System.out.println("Introduce el nombre de la persona que vas a añadir");
+                                String nombrePersona = sc.next();
+                                System.out.println("Introduce el correo de la persona que vas a añadir");
+                                String correoPersona = sc.next();
+                                System.out.println("Introduce la tarea que va a ser responsable");
+                                tarea = sc.next();
+                                Persona persona = new Persona(nombrePersona, correoPersona);
+                                System.out.println(controladorProyectos.añadirPersonaTarea(proyectoSeleccionado.getNombre(),tarea,persona));
                                 break;
                             case ELIMINAR_PERSONA_TAREA:
-                                System.out.println("Eliminar persona en una tarea");
+                                System.out.println("Introduce el nombre de la persona que vas a añadir");
+                                nombrePersona = sc.next();
+                                System.out.println("Introduce el correo de la persona que vas a añadir");
+                                correoPersona = sc.next();
+                                System.out.println("Introduce la tarea que va a ser responsable");
+                                tarea = sc.next();
+                                persona = new Persona(nombrePersona, correoPersona);
+                                System.out.println(controladorProyectos.eliminarPersonaTarea(proyectoSeleccionado.getNombre(),tarea,persona));
                                 break;
                             case HACER_RESPONSABLE_TAREA:
-                                System.out.println("Responsabilizar a una persona en una tarea");
+                                System.out.println("Introduce el nombre de la persona ha hacer responsable");
+                                nombrePersona = sc.next();
+                                System.out.println("Introduce el correo de la persona ha hacer responsable");
+                                correoPersona = sc.next();
+                                System.out.println("Introduce la tarea que va a ser responsable");
+                                tarea = sc.next();
+                                Persona p = new Persona(nombrePersona,correoPersona);
+                                System.out.println(controladorProyectos.hacerResponsable(proyectoSeleccionado.getNombre(),tarea,p));
                                 break;
                             case LISTAR_ETIQUETA:
                                 ArrayList<Etiqueta> listaEtiquetas = controladorEtiqueta.devolverEtiquetas();
@@ -195,10 +223,20 @@ public class Menu {
                                 System.out.println(controladorEtiqueta.añadirEtiqueta(nombre));
                                 break;
                             case ANYADIR_ETIQUETA_TAREA:
-                                System.out.println("Añadir etiqueta a una tarea");
+                                System.out.println("Introduce el nombre de la etiqueta que vas a añadir");
+                                String nombreEtiqueta = sc.next();
+                                System.out.println("Introduce la tarea");
+                                tarea = sc.next();
+                                Etiqueta etiqueta = new Etiqueta(nombreEtiqueta);
+                                System.out.println(controladorProyectos.añadirEtiquetaTarea(proyectoSeleccionado.getNombre(),tarea,etiqueta));
                                 break;
                             case ELIMINAR_ETIQUETA_TAREA:
-                                System.out.println("Eliminar etiqueta de una tarea");
+                                System.out.println("Introduce el nombre de la etiqueta que vas a eliminar");
+                                nombreEtiqueta = sc.next();
+                                System.out.println("Introduce la tarea");
+                                tarea = sc.next();
+                                etiqueta = new Etiqueta(nombreEtiqueta);
+                                System.out.println(controladorProyectos.eliminarEtiquetaTarea(proyectoSeleccionado.getNombre(),tarea,etiqueta));
                                 break;
                             case SALIR:
                                 break;

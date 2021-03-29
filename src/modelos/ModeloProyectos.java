@@ -1,5 +1,6 @@
 package modelos;
 
+import clases.Etiqueta;
 import clases.Persona;
 import clases.Proyecto;
 import clases.Tarea;
@@ -63,7 +64,9 @@ public class ModeloProyectos {
 
 
     public boolean añadirTareasProyecto(String p, Tarea t) {
+        System.err.println("MODELO 1");
         if (listaTareasProyecto.containsKey(p)) {
+            System.err.println("MODELO 2");
             ArrayList<Tarea> listaTareas = listaTareasProyecto.get(p);
             listaTareas.add(t);
             listaTareasProyecto.replace(p,listaTareas);
@@ -73,12 +76,90 @@ public class ModeloProyectos {
     }
 
     public ArrayList<Tarea> listarTareasProyecto(String p) {
+        System.err.println("MODELO 1");
         if (listaTareasProyecto.containsKey(p)) {
+            System.err.println("MODELO 2");
             ArrayList<Tarea> listaTareas = listaTareasProyecto.get(p);
             return listaTareas;
         }
         return null;
     }
 
+    public boolean hacerResponsable(String proyecto, String tarea, Persona persona) {
+        if(listaTareasProyecto.containsKey(proyecto)) {
+            ArrayList<Tarea> listaTareas = listaTareasProyecto.get(proyecto);
+            for (Tarea t : listaTareas) {
+                if(t.getNombre().equals(tarea))
+                    t.setResponsable(persona);
+            }
+            listaTareasProyecto.replace(proyecto,listaTareas);
+            return true;
+        }
+        return false;
+    }
 
+    public boolean finalizarTarea(String proyecto, String tarea) {
+        if(listaTareasProyecto.containsKey(proyecto)) {
+            ArrayList<Tarea> listaTareas = listaTareasProyecto.get(proyecto);
+            for (Tarea t : listaTareas) {
+                if(t.getNombre().equals(tarea))
+                    t.setEstadoTarea(true);
+            }
+            listaTareasProyecto.replace(proyecto,listaTareas);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean añadirPersonaTarea(String proyecto, String tarea, Persona persona) {
+        if(listaTareasProyecto.containsKey(proyecto)) {
+            ArrayList<Tarea> listaTareas = listaTareasProyecto.get(proyecto);
+            for (Tarea t : listaTareas) {
+                if(t.getNombre().equals(tarea))
+                    t.getListaParticipantes().add(persona);
+            }
+            listaTareasProyecto.replace(proyecto,listaTareas);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean eliminarPersonaTarea(String proyecto, String tarea, Persona persona) {
+        if(listaTareasProyecto.containsKey(proyecto)) {
+            ArrayList<Tarea> listaTareas = listaTareasProyecto.get(proyecto);
+            for (Tarea t : listaTareas) {
+                if(t.getNombre().equals(tarea))
+                    t.getListaParticipantes().remove(persona);
+            }
+            listaTareasProyecto.replace(proyecto,listaTareas);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean añadirEtiquetaTarea(String proyecto, String tarea, Etiqueta etiqueta) {
+        if(listaTareasProyecto.containsKey(proyecto)) {
+            ArrayList<Tarea> listaTareas = listaTareasProyecto.get(proyecto);
+            for (Tarea t : listaTareas) {
+                if(t.getNombre().equals(tarea))
+                    t.getEtiquetas().add(etiqueta);
+            }
+            listaTareasProyecto.replace(proyecto,listaTareas);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean eliminarEtiquetaTarea(String proyecto, String tarea, Etiqueta etiqueta) {
+        if(listaTareasProyecto.containsKey(proyecto)) {
+            ArrayList<Tarea> listaTareas = listaTareasProyecto.get(proyecto);
+            for (Tarea t : listaTareas) {
+                if(t.getNombre().equals(tarea))
+                    t.getEtiquetas().remove(etiqueta);
+            }
+            listaTareasProyecto.replace(proyecto,listaTareas);
+            return true;
+        }
+        return false;
+    }
 }
