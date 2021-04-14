@@ -14,11 +14,14 @@ import enumeraciones.MenuPrincipal;
 import enumeraciones.MenuProyectos;
 import enumeraciones.MenuTareas;
 import excepciones.ProyectoNoSeleccionadoException;
+import vistas.Almacenamiento;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Menu {
+public class Menu implements Serializable {
     private ControladorPersonas controladorPersonas;
     private ControladorProyectos controladorProyectos;
     private ControladorTareas controladorTareas;
@@ -33,6 +36,15 @@ public class Menu {
         controladorProyectos = new ControladorProyectos(controladorPersonas,controladorTareas);
         proyectoSeleccionado = null;
     }
+
+    public void escrituraDeDatos(){
+        try {
+            Almacenamiento.escritura(this);
+        } catch (IOException e) {
+            System.err.println("Error al guardar los datos");
+        }
+    }
+
     public void cargarMenú() {
         try {
             int opcion;
@@ -253,7 +265,7 @@ public class Menu {
                                 String nombrePersona = sc.next();
                                 System.out.println("Introduzca el correo de " + nombrePersona);
                                 String correoPersona = sc.next();
-                                System.out.println(controladorPersonas.añadirPersona(nombrePersona, correoPersona));
+                                System.out.println(controladorPersonas.anyadirPersona(nombrePersona, correoPersona));
                                 break;
                             case LISTAR_PERSONAS:
                                 ArrayList<Persona> listaPersonas;
@@ -278,6 +290,7 @@ public class Menu {
                         break;
                     case SALIR:
                         System.out.println("Salimos del programa gracias!");
+                        escrituraDeDatos();
                         System.exit(0);
                 }
             } while (opcion >= 0);

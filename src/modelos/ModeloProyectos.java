@@ -6,6 +6,7 @@ import clases.Etiqueta;
 import clases.Persona;
 import clases.Proyecto;
 import clases.Tarea;
+import excepciones.PersonaEnTareaException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,9 @@ public class ModeloProyectos {
     public boolean añadirPersonasProyecto(String p, Persona persona) {
         if (listaPersonasProyecto.containsKey(p)) {
             ArrayList<Persona> listaPersonas = listaPersonasProyecto.get(p);
+            if(listaPersonas.contains(persona)) {
+                throw new PersonaEnTareaException(); // FALTA REVISAR
+            }
             listaPersonas.add(persona);
             listaPersonasProyecto.replace(p,listaPersonas);
             return true;
@@ -64,9 +68,7 @@ public class ModeloProyectos {
 
 
     public boolean añadirTareasProyecto(String p, Tarea t) {
-        System.err.println("MODELO 1");
         if (listaTareasProyecto.containsKey(p)) {
-            System.err.println("MODELO 2");
             ArrayList<Tarea> listaTareas = listaTareasProyecto.get(p);
             listaTareas.add(t);
             listaTareasProyecto.replace(p,listaTareas);
@@ -76,9 +78,7 @@ public class ModeloProyectos {
     }
 
     public ArrayList<Tarea> listarTareasProyecto(String p) {
-        System.err.println("MODELO 1");
         if (listaTareasProyecto.containsKey(p)) {
-            System.err.println("MODELO 2");
             ArrayList<Tarea> listaTareas = listaTareasProyecto.get(p);
             return listaTareas;
         }

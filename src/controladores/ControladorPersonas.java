@@ -18,7 +18,7 @@ public class ControladorPersonas {
     * Devuelve true en el caso de ser validos dichos datos y false en el caso contrario
     *
     * */
-    public  String añadirPersona(String nombre, String correo) {
+    public  String anyadirPersona(String nombre, String correo) {
         if(nombre.equals(" ") || correo.equals(" ")) {
             return "Los campos no pueden estar vacios";
         }
